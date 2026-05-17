@@ -89,3 +89,10 @@ body {
   transform: scale(1.1);
 }
 
+/* Premium Row Hover elevation and color matching */
+.clip-item-row:hover {
+  background-color: var(--hover-bg) !important;
+  border-color: var(--accent) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08) !important;
+}
+

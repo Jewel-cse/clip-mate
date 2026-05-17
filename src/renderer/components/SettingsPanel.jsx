@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const SettingsPanel = ({ onBack, onSaveTheme }) => {
+const SettingsPanel = ({ onBack, onSaveTheme, onClearAll }) => {
   const [settings, setSettings] = useState({
     hotkey: 'CommandOrControl+Shift+V',
     retentionLimit: 500,
@@ -38,6 +38,24 @@ const SettingsPanel = ({ onBack, onSaveTheme }) => {
       alert('Failed to save settings');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleClearAll = async () => {
+    const confirmed = window.confirm("Are you sure you want to clear ALL clipboard history? This will also delete all cached images on your hard drive. This action cannot be undone.");
+    if (!confirmed) return;
+    
+    try {
+      const res = await window.clipmate.clearAllClips();
+      if (res.success) {
+        if (onClearAll) {
+          onClearAll();
+        }
+        alert("All clips cleared successfully!");
+      }
+    } catch (err) {
+      console.error("Failed to clear clips:", err);
+      alert("Failed to clear clips");
     }
   };
 
@@ -153,6 +171,42 @@ const SettingsPanel = ({ onBack, onSaveTheme }) => {
           <label htmlFor="monitoringEnabled" style={{ fontSize: '14px', fontWeight: 'bold', cursor: 'pointer' }}>
             Enable Clipboard Monitoring
           </label>
+        </div>
+
+        {/* Danger Zone: Clear all clips */}
+        <div style={{
+          borderTop: '1px solid var(--border)',
+          paddingTop: '15px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '8px'
+        }}>
+          <h4 style={{ fontSize: '12px', color: '#ef4444', fontWeight: 'bold', letterSpacing: '0.5px', textTransform: 'uppercase' }}>
+            Danger Zone
+          </h4>
+          <button
+            type="button"
+            onClick={handleClearAll}
+            style={{
+              padding: '10px',
+              borderRadius: '6px',
+              border: '1px solid #ef4444',
+              backgroundColor: 'transparent',
+              color: '#ef4444',
+              cursor: 'pointer',
+              fontWeight: 'bold',
+              transition: 'all 0.2s ease',
+              textAlign: 'center',
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = 'rgba(239, 68, 68, 0.08)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = 'transparent';
+            }}
+          >
+            Clear All Clipboard History
+          </button>
         </div>
 
         <button

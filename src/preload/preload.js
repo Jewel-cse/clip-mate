@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('clipmate', {
   searchClips: (query) => ipcRenderer.invoke('clips:search', query),
   copyClip: (id) => ipcRenderer.invoke('clips:copy', id),
   deleteClip: (id) => ipcRenderer.invoke('clips:delete', id),
+  clearAllClips: () => ipcRenderer.invoke('clips:clear-all'),
   hideWindow: () => ipcRenderer.invoke('window:hide'),
   getSettings: () => ipcRenderer.invoke('settings:get'),
   updateSettings: (settings) => ipcRenderer.invoke('settings:update', settings),

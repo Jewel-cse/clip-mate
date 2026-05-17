@@ -84,6 +84,27 @@ function deleteClip(id) {
   return false;
 }
 
+function clearAllClips() {
+  const fs = require('fs');
+  const clips = getClips();
+  
+  // Purge all image files on disk
+  clips.forEach(clip => {
+    if (clip.type === 'image' && clip.imagePath) {
+      try {
+        if (fs.existsSync(clip.imagePath)) {
+          fs.unlinkSync(clip.imagePath);
+        }
+      } catch (err) {
+        console.error(`Failed to delete image file ${clip.imagePath} during purge:`, err);
+      }
+    }
+  });
+
+  store.set('clips', []);
+  return true;
+}
+
 module.exports = {
   store,
   getClips,
@@ -92,4 +113,5 @@ module.exports = {
   getSettings,
   updateSettings,
   deleteClip,
+  clearAllClips,
 };

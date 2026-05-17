@@ -60,11 +60,16 @@ const ClipItem = ({ clip, isSelected, onCopy, onDelete }) => {
       style={{
         display: 'flex',
         alignItems: 'center',
-        padding: '12px 20px',
-        borderBottom: '1px solid var(--border)',
-        backgroundColor: isSelected ? 'var(--hover-bg)' : 'transparent',
+        padding: '10px 16px',
+        margin: '8px 12px',
+        borderRadius: '6px',
+        border: '0.5px solid var(--border)',
+        boxShadow: isSelected 
+          ? '0 4px 12px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08)' 
+          : '0 2px 6px rgba(0, 0, 0, 0.03), 0 1px 3px rgba(0, 0, 0, 0.02)',
+        backgroundColor: isSelected ? 'var(--hover-bg)' : 'var(--bg-primary)',
         cursor: 'pointer',
-        transition: 'background-color 0.1s ease',
+        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
       }}
       className="no-drag clip-item-row"
     >
@@ -73,13 +78,7 @@ const ClipItem = ({ clip, isSelected, onCopy, onDelete }) => {
       </div>
       
       <div style={{ flex: 1, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-        {clip.type === 'image' ? (
-          <span style={{ fontWeight: 'bold', color: 'var(--accent)', fontSize: '14px' }}>
-            {clip.content || 'image.png'}
-          </span>
-        ) : (
-          clip.content
-        )}
+        {clip.content}
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: '15px' }}>

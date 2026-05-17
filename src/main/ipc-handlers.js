@@ -103,6 +103,12 @@ function registerIpcHandlers() {
     }
     return { success: true };
   });
+
+  ipcMain.handle('clips:clear-all', async () => {
+    const { clearAllClips } = require('./store');
+    const success = clearAllClips();
+    return { success };
+  });
 }
 
 module.exports = { registerIpcHandlers };

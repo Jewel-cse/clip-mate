@@ -158,7 +158,11 @@ const App = () => {
             <ClipList clips={clips} selectedIndex={selectedIndex} onCopy={handleCopy} onDelete={handleDelete} />
           </>
         ) : (
-          <SettingsPanel onBack={() => setView('history')} onSaveTheme={applyTheme} />
+          <SettingsPanel
+            onBack={() => setView('history')}
+            onSaveTheme={applyTheme}
+            onClearAll={() => setClips([])}
+          />
         )}
       </div>
       
