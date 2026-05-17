@@ -53,16 +53,17 @@ function startMonitoring(mainWindow) {
       lastImage = currentImage.toDataURL();
       hasNewClip = true;
       lastText = currentText; // Update text cache
-
-      const imageName = `${crypto.randomUUID()}.png`;
+      // Create a small 48x48 thumbnail for premium in-list previews
+      const thumbnail = currentImage.resize({ width: 48, height: 48 }).toDataURL();
+      const imageName = `image data`;
       const imagePath = path.join(imagesDir, imageName);
-      fs.writeFileSync(imagePath, currentImage.toPNG());
 
       newClip = {
         id: crypto.randomUUID(),
         type: 'image',
-        content: null,
+        content: imageName,
         imagePath: imagePath,
+        thumbnail: thumbnail,
         timestamp: new Date().toISOString(),
         charLength: 0,
       };

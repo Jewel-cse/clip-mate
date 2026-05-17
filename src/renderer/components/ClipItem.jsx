@@ -11,7 +11,25 @@ const ClipItem = ({ clip, isSelected, onCopy, onDelete }) => {
 
   const getIcon = () => {
     if (clip.type === 'link') return '🔗';
-    if (clip.type === 'image') return '🖼️';
+    if (clip.type === 'image') {
+      if (clip.thumbnail) {
+        return (
+          <img
+            src={clip.thumbnail}
+            alt=""
+            style={{
+              width: '26px',
+              height: '26px',
+              borderRadius: '4px',
+              objectFit: 'cover',
+              border: '1px solid var(--border)',
+              display: 'block',
+            }}
+          />
+        );
+      }
+      return '🖼️';
+    }
     return '🔤';
   };
 
@@ -50,11 +68,15 @@ const ClipItem = ({ clip, isSelected, onCopy, onDelete }) => {
       }}
       className="no-drag clip-item-row"
     >
-      <div style={{ fontSize: '18px', marginRight: '15px' }}>{getIcon()}</div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '26px', height: '26px', marginRight: '15px' }}>
+        {getIcon()}
+      </div>
       
       <div style={{ flex: 1, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
         {clip.type === 'image' ? (
-          <span style={{ color: 'var(--text-muted)', fontStyle: 'italic' }}>Image Data</span>
+          <span style={{ fontWeight: 'bold', color: 'var(--accent)', fontSize: '14px' }}>
+            {clip.content || 'image.png'}
+          </span>
         ) : (
           clip.content
         )}
