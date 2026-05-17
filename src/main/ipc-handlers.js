@@ -3,9 +3,9 @@ const { getClips, searchClips } = require('./store');
 
 function registerIpcHandlers() {
   ipcMain.handle('ping:pong', async (event, message) => {
-    // Phase 2.5: Add input validation
-    if (typeof message !== 'string') {
-      throw new Error('Invalid argument: message must be a string');
+    // Stage 2.5/7.3: Solid argument validation
+    if (typeof message !== 'string' || message.length > 500) {
+      throw new Error('Invalid argument: message must be a string <= 500 chars');
     }
     
     console.log('Main process received ping with message:', message);
@@ -17,13 +17,17 @@ function registerIpcHandlers() {
   });
 
   ipcMain.handle('clips:search', async (event, query) => {
-    if (typeof query !== 'string') {
-      throw new Error('Invalid argument: query must be a string');
+    if (typeof query !== 'string' || query.length > 100) {
+      throw new Error('Invalid argument: query must be a string <= 100 chars');
     }
     return searchClips(query);
   });
 
   ipcMain.handle('clips:copy', async (event, id) => {
+    if (typeof id !== 'string' || id.length !== 36) {
+      throw new Error('Invalid argument: id must be a UUID v4 string of 36 characters');
+    }
+
     const clips = getClips();
     const clip = clips.find(c => c.id === id);
     
@@ -31,7 +35,6 @@ function registerIpcHandlers() {
       if (clip.type === 'text' || clip.type === 'link') {
         clipboard.writeText(clip.content);
       } else if (clip.type === 'image') {
-        // To write image back to clipboard, we need to read it using nativeImage
         const { nativeImage } = require('electron');
         const image = nativeImage.createFromPath(clip.imagePath);
         clipboard.writeImage(image);
@@ -54,9 +57,29 @@ function registerIpcHandlers() {
   });
 
   ipcMain.handle('settings:update', async (event, newSettings) => {
-    if (typeof newSettings !== 'object') {
-      throw new Error('Invalid argument: settings must be an object');
+    if (typeof newSettings !== 'object' || newSettings === null) {
+      throw new Error('Invalid argument: settings must be a non-null object');
     }
+
+    // Harden settings attributes
+    const { hotkey, retentionLimit, theme, monitoringEnabled } = newSettings;
+    
+    if (hotkey !== undefined && (typeof hotkey !== 'string' || hotkey.length > 100)) {
+      throw new Error('Invalid argument: hotkey must be a string <= 100 characters');
+    }
+
+    if (retentionLimit !== undefined && (typeof retentionLimit !== 'number' || retentionLimit < 10 || retentionLimit > 2000)) {
+      throw new Error('Invalid argument: retentionLimit must be a number between 10 and 2000');
+    }
+
+    if (theme !== undefined && !['light', 'dark', 'system'].includes(theme)) {
+      throw new Error('Invalid argument: theme must be one of light, dark, system');
+    }
+
+    if (monitoringEnabled !== undefined && typeof monitoringEnabled !== 'boolean') {
+      throw new Error('Invalid argument: monitoringEnabled must be a boolean');
+    }
+
     const { getSettings, updateSettings } = require('./store');
     const oldSettings = getSettings();
     updateSettings(newSettings);

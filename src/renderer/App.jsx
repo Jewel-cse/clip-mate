@@ -121,6 +121,7 @@ const App = () => {
           <button
             onClick={() => setView('settings')}
             className="no-drag"
+            aria-label="Open settings panel"
             style={{
               background: 'none',
               border: 'none',

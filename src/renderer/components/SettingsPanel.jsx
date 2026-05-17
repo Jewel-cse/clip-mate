@@ -54,6 +54,7 @@ const SettingsPanel = ({ onBack, onSaveTheme }) => {
         <h2 style={{ fontSize: '20px' }}>Settings</h2>
         <button
           onClick={onBack}
+          aria-label="Back to clipboard history"
           style={{
             background: 'none',
             border: 'none',
@@ -69,13 +70,15 @@ const SettingsPanel = ({ onBack, onSaveTheme }) => {
 
       <form onSubmit={handleSave} style={{ display: 'flex', flexDirection: 'column', gap: '20px', flex: 1 }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <label style={{ fontSize: '14px', fontWeight: 'bold', color: 'var(--text-muted)' }}>
+          <label htmlFor="hotkey-input" style={{ fontSize: '14px', fontWeight: 'bold', color: 'var(--text-muted)' }}>
             Global Hotkey
           </label>
           <input
+            id="hotkey-input"
             type="text"
             value={settings.hotkey}
             onChange={(e) => handleChange('hotkey', e.target.value)}
+            aria-label="Global hotkey shortcut"
             style={{
               padding: '10px',
               borderRadius: '6px',
@@ -90,13 +93,15 @@ const SettingsPanel = ({ onBack, onSaveTheme }) => {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <label style={{ fontSize: '14px', fontWeight: 'bold', color: 'var(--text-muted)' }}>
+          <label htmlFor="limit-input" style={{ fontSize: '14px', fontWeight: 'bold', color: 'var(--text-muted)' }}>
             Retention Limit (Max Clips)
           </label>
           <input
+            id="limit-input"
             type="number"
             value={settings.retentionLimit}
             onChange={(e) => handleChange('retentionLimit', parseInt(e.target.value, 10))}
+            aria-label="Maximum clips to retain"
             style={{
               padding: '10px',
               borderRadius: '6px',
@@ -112,12 +117,14 @@ const SettingsPanel = ({ onBack, onSaveTheme }) => {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-          <label style={{ fontSize: '14px', fontWeight: 'bold', color: 'var(--text-muted)' }}>
+          <label htmlFor="theme-select" style={{ fontSize: '14px', fontWeight: 'bold', color: 'var(--text-muted)' }}>
             Theme
           </label>
           <select
+            id="theme-select"
             value={settings.theme}
             onChange={(e) => handleChange('theme', e.target.value)}
+            aria-label="Application theme selection"
             style={{
               padding: '10px',
               borderRadius: '6px',
@@ -141,6 +148,7 @@ const SettingsPanel = ({ onBack, onSaveTheme }) => {
             checked={settings.monitoringEnabled}
             onChange={(e) => handleChange('monitoringEnabled', e.target.checked)}
             style={{ width: '18px', height: '18px', cursor: 'pointer' }}
+            aria-label="Enable or disable clipboard monitoring"
           />
           <label htmlFor="monitoringEnabled" style={{ fontSize: '14px', fontWeight: 'bold', cursor: 'pointer' }}>
             Enable Clipboard Monitoring
@@ -150,6 +158,7 @@ const SettingsPanel = ({ onBack, onSaveTheme }) => {
         <button
           type="submit"
           disabled={saving}
+          aria-label="Save settings modifications"
           style={{
             marginTop: 'auto',
             padding: '12px',

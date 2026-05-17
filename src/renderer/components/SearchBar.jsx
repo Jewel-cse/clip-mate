@@ -24,6 +24,7 @@ const SearchBar = ({ query, onChange }) => {
         ref={inputRef}
         type="text"
         placeholder="Search clips... (Ctrl+F)"
+        aria-label="Search clipboard history"
         value={query}
         onChange={(e) => onChange(e.target.value)}
         style={{
