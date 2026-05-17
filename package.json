@@ -2,9 +2,6 @@
   "name": "clipboard",
   "version": "1.0.0",
   "main": "src/main/index.js",
-  "directories": {
-    "doc": "docs"
-  },
   "scripts": {
     "dev:vite": "vite",
     "dev:electron": "wait-on tcp:5173 && electron .",

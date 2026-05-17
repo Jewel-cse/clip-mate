@@ -1,0 +1,35 @@
+appId: com.clipmate.app
+productName: ClipMate
+
+files:
+  - "package.json"
+  - "src/main/**/*"
+  - "src/preload/**/*"
+  - "src/renderer/dist/**/*"
+  - "!node_modules/electron"
+  - "!node_modules/electron-builder"
+
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: build/icon.png
+
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+  shortcutName: ClipMate
+  runAfterFinish: true
+
+mac:
+  target:
+    - dmg
+  icon: build/icon.png
+
+linux:
+  target:
+    - AppImage
+  icon: build/icon.png
