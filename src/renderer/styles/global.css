@@ -1,0 +1,73 @@
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --accent: #6366f1;
+  --text-primary: #111827;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --hover-bg: #e0e7ff;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --accent: #818cf8;
+    --text-primary: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: #334155;
+    --hover-bg: #312e81;
+  }
+}
+
+/* Explicit Forced Light Theme */
+html[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --accent: #6366f1;
+  --text-primary: #111827;
+  --text-muted: #6b7280;
+  --border: #e5e7eb;
+  --hover-bg: #e0e7ff;
+}
+
+/* Explicit Forced Dark Theme */
+html[data-theme="dark"] {
+  --bg-primary: #1a1a2e;
+  --bg-secondary: #16213e;
+  --accent: #818cf8;
+  --text-primary: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --hover-bg: #312e81;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden; /* Hide scrollbars on the window itself */
+  user-select: none; /* Prevent text selection in UI */
+}
+
+/* Draggable titlebar area if we make window frameless */
+.titlebar-drag {
+  -webkit-app-region: drag;
+  height: 30px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+/* Allow clicking on specific elements inside draggable region */
+.no-drag {
+  -webkit-app-region: no-drag;
+}
