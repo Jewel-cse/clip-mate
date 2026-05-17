@@ -44,6 +44,15 @@ function registerIpcHandlers() {
     return { success: false, error: 'Clip not found' };
   });
 
+  ipcMain.handle('clips:delete', async (event, id) => {
+    if (typeof id !== 'string' || id.length !== 36) {
+      throw new Error('Invalid argument: id must be a UUID v4 string of 36 characters');
+    }
+    const { deleteClip } = require('./store');
+    const success = deleteClip(id);
+    return { success };
+  });
+
   ipcMain.handle('window:hide', () => {
     const window = BrowserWindow.getFocusedWindow();
     if (window) {

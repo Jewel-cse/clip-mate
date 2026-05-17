@@ -75,6 +75,19 @@ const App = () => {
     }
   }, []);
 
+  const handleDelete = useCallback(async (id) => {
+    try {
+      const res = await window.clipmate.deleteClip(id);
+      if (res.success) {
+        setClips((prev) => prev.filter(c => c.id !== id));
+        setToastMessage('Clip deleted');
+      }
+    } catch (err) {
+      console.error('Delete failed:', err);
+      setToastMessage('Delete failed');
+    }
+  }, []);
+
   // Keyboard navigation
   useEffect(() => {
     if (view !== 'history') return;
@@ -142,7 +155,7 @@ const App = () => {
         {view === 'history' ? (
           <>
             <SearchBar query={query} onChange={setQuery} />
-            <ClipList clips={clips} selectedIndex={selectedIndex} onCopy={handleCopy} />
+            <ClipList clips={clips} selectedIndex={selectedIndex} onCopy={handleCopy} onDelete={handleDelete} />
           </>
         ) : (
           <SettingsPanel onBack={() => setView('history')} onSaveTheme={applyTheme} />

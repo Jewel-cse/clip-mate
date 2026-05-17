@@ -60,6 +60,30 @@ function updateSettings(newSettings) {
   store.set('settings', { ...current, ...newSettings });
 }
 
+function deleteClip(id) {
+  const fs = require('fs');
+  const clips = getClips();
+  const clipIndex = clips.findIndex(c => c.id === id);
+
+  if (clipIndex !== -1) {
+    const clip = clips[clipIndex];
+    // If it's an image, delete the cached file on disk
+    if (clip.type === 'image' && clip.imagePath) {
+      try {
+        if (fs.existsSync(clip.imagePath)) {
+          fs.unlinkSync(clip.imagePath);
+        }
+      } catch (err) {
+        console.error('Failed to delete image file from disk:', err);
+      }
+    }
+    clips.splice(clipIndex, 1);
+    store.set('clips', clips);
+    return true;
+  }
+  return false;
+}
+
 module.exports = {
   store,
   getClips,
@@ -67,4 +91,5 @@ module.exports = {
   saveClip,
   getSettings,
   updateSettings,
+  deleteClip,
 };

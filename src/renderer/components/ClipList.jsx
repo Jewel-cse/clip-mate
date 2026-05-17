@@ -1,7 +1,7 @@
 import React from 'react';
 import ClipItem from './ClipItem';
 
-const ClipList = ({ clips, selectedIndex, onCopy }) => {
+const ClipList = ({ clips, selectedIndex, onCopy, onDelete }) => {
   if (clips.length === 0) {
     return (
       <div style={{ padding: '30px', textAlign: 'center', color: 'var(--text-muted)' }}>
@@ -18,6 +18,7 @@ const ClipList = ({ clips, selectedIndex, onCopy }) => {
           clip={clip}
           isSelected={index === selectedIndex}
           onCopy={onCopy}
+          onDelete={onDelete}
         />
       ))}
     </div>

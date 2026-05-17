@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const ClipItem = ({ clip, isSelected, onCopy }) => {
+const ClipItem = ({ clip, isSelected, onCopy, onDelete }) => {
   const itemRef = useRef(null);
 
   useEffect(() => {
@@ -28,6 +28,13 @@ const ClipItem = ({ clip, isSelected, onCopy }) => {
     return `${diffDays}d`;
   };
 
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    if (onDelete) {
+      onDelete(clip.id);
+    }
+  };
+
   return (
     <div
       ref={itemRef}
@@ -41,7 +48,7 @@ const ClipItem = ({ clip, isSelected, onCopy }) => {
         cursor: 'pointer',
         transition: 'background-color 0.1s ease',
       }}
-      className="no-drag"
+      className="no-drag clip-item-row"
     >
       <div style={{ fontSize: '18px', marginRight: '15px' }}>{getIcon()}</div>
       
@@ -53,8 +60,31 @@ const ClipItem = ({ clip, isSelected, onCopy }) => {
         )}
       </div>
 
-      <div style={{ marginLeft: '15px', color: 'var(--text-muted)', fontSize: '12px' }}>
-        {formatRelativeTime(clip.timestamp)}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginLeft: '15px' }}>
+        <div style={{ color: 'var(--text-muted)', fontSize: '12px' }}>
+          {formatRelativeTime(clip.timestamp)}
+        </div>
+        <button
+          onClick={handleDelete}
+          aria-label="Delete clip"
+          className="delete-btn"
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--text-muted)',
+            fontSize: '18px',
+            cursor: 'pointer',
+            padding: '2px 6px',
+            borderRadius: '4px',
+            lineHeight: 1,
+            transition: 'all 0.2s ease',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          &times;
+        </button>
       </div>
     </div>
   );
