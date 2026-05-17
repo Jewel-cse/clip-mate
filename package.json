@@ -9,10 +9,32 @@
     "build:vite": "vite build",
     "build": "npm run build:vite && electron-builder"
   },
-  "keywords": [],
+  "description": "ClipMate - A sleek, premium, cross-platform clipboard manager built with Electron, React, and Vite. Features instant keyboard shortcuts, real-time image previews, detailed history search, settings configurations, and customizable theme integrations.",
+  "homepage": "https://github.com/Jewel-cse/clip-mate#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jewel-cse/clip-mate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jewel-cse/clip-mate/issues"
+  },
+  "keywords": [
+    "clipboard",
+    "clipboard-manager",
+    "electron",
+    "react",
+    "vite",
+    "desktop-app",
+    "productivity",
+    "windows",
+    "macos",
+    "linux",
+    "shortcuts",
+    "utility",
+    "tray-app"
+  ],
   "author": "Rana",
   "license": "MIT",
-  "description": "ClipMate Desktop Application",
   "dependencies": {
     "electron-squirrel-startup": "^1.0.1",
     "electron-store": "^11.0.2",
