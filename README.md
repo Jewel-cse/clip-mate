@@ -77,15 +77,17 @@ Ensure you have **Node.js** (v18+) and **npm** installed.
 
 ---
 
-## 📦 Production Builds
+## 📦 Production & Local Builds
 
-To package the application for distribution (e.g. creating standalone Windows `.exe` installers):
+To package the application for distribution, you can run:
 
 ```bash
 npm run build
 ```
 
-This compiles your React frontend into production-ready assets inside `src/renderer/dist` and prepares the Electron package pipeline.
+For step-by-step instructions on compiling and packaging ClipMate on your specific machine, including detailed requirements and commands for **Windows (.exe)**, **macOS (.dmg)**, **Ubuntu/Debian (.deb)**, and **Fedora/CentOS (.rpm)**, please refer to our comprehensive:
+
+👉 **[Step-by-Step Building & Packaging Guide](docs/build-instructions.md)**
 
 ---
 
